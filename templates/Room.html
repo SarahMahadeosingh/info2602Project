@@ -1,0 +1,155 @@
+{% extends "Layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Room.css') }}">
+
+{% endblock %}
+
+{% block title %} Room {% endblock %}
+
+{% block style %}
+body {
+    //background-image: url('img/photo-1517840901100-8179e982acb7.jfif');
+     background-image: url({{url_for('static',filename='photo-1517840901100-8179e982acb7.png')}});
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+  <style>
+    .room{
+      background-color:white;
+      opacity: 100%;
+
+      top: 30%;
+      left: 25%;
+    
+      width: 40%;
+    
+      border: 3px solid black;
+    
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .card{
+      width: 30%;
+
+      top: 30%;
+      left: 30%;
+
+      border: 3px solid black;
+      transition: 1s;
+      padding:5px;
+    }
+
+    .card:hover{
+      transform: scale(1.1);
+    }
+
+    .room-container {
+      //border: 3px solid #fff;
+
+      //padding: 5px;
+
+       //border-radius: 3%;
+      //background-color:white;
+      //opacity: 0.9;
+      //overflow: scroll;
+      //white-space: nowrap;
+
+      /*
+       overflow-x: auto;
+       overflow-y: hidden;
+      white-space: nowrap;
+      display: flex;
+
+      */
+
+      //width:100px;
+
+      //display: flex;
+      justify-content: center;
+
+    }
+
+
+
+.room-child {
+    width: 100%;
+    //float: left;
+    padding: 5px;
+    //border: 2px solid red;
+} */ 
+   
+  </style>
+
+
+     <nav class="black">
+            <div class="nav-content">
+                <ul class="tabs tabs-transparent">
+                  <li class="tab"><a  href="/" >Home</a></li>
+                  <li class="tab" ><a class="active" href="/rooms" >Room</a></li>
+                  <li class="tab"><a  href="/about" >About</a></li>
+                  <li class="tab"><a  href="/loginForm" >Login</a></li>
+                </ul>
+              </div>
+        </nav>
+
+      
+       
+       <div class = "room-container">
+
+
+        <div class = "room-child">
+
+        <div class = "card">
+            <img src="{{url_for('static', filename='singleRoom.png')}}" style="width:100%"/>
+           <p> Room Type : Single Room </p>
+           <p> Room Rate : $250 </p>
+           <a href="/rooms/Single" class="waves-effect waves-light btn">View</a>
+        </div>
+
+        </div>
+
+        <div class = "room-child">
+
+         <div class = "card">
+            <img src="{{url_for('static', filename='doublebedRoom.png')}}" style="width:100%"/>
+           <p> Room Type : Double Bed Room </p>
+           <p> Room Rate : $400 </p>
+           <a href="/rooms/Double" class="waves-effect waves-light btn">View</a>
+        </div>
+
+        </div>
+
+        <div class = "room-child">
+
+        <div class = "card">
+            <img src="{{url_for('static', filename='queenbedRoom.png')}}" style="width:100%"/>
+           <p> Room Type : Queen Bed Room </p>
+           <p> Room Rate : $500 </p>
+           <a href="/rooms/Queen" class="waves-effect waves-light btn">View</a>
+        </div>
+
+        </div>
+
+        <div class = "room-child">
+
+        <div class = "card">
+            <img src="{{url_for('static', filename='luxuryRoom.png')}}" style="width:100%"/>
+           <p> Room Type : Luxury Room </p>
+           <p> Room Rate : $700 </p>
+           <a href="/rooms/Luxury" class="waves-effect waves-light btn">View</a>
+        </div>
+
+        </div>
+
+    </div>
+{% endblock %}

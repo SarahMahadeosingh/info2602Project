@@ -1,0 +1,89 @@
+
+{% extends "layout.html" %}
+{% block title %}Home{% endblock %}
+{% block page %}
+      <a href="#" class="brand-logo"></a>
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+<style>
+p {text-align: center;}
+</style>
+ <div class="container">
+ <h5><p>Welcome to Paradise Hotel</p></h5>
+ </div>
+
+  <!--slider  frame --> 
+<div class="slider">
+    <ul class="slides">
+      <li>
+        <img src="#"> <!-- slider image -->
+        <div class="caption center-align">
+          <h3>This is our big Tagline!</h3>
+        </div>
+      </li>
+      <li>
+        <img src="#"> <!-- slider image -->
+        <div class="caption left-align">
+          <h3>Left Aligned Caption</h3>
+        </div>
+      </li>
+       <li>
+        <img src="#"> <!-- slider image -->
+        <div class="caption right-align">
+          <h3>Right Aligned Caption</h3>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+ <!--card frame --> 
+  <div class="row">
+  <div class="col m4">
+    <div class="card">
+      <div class="card-image">
+        <img src="#">  <!-- card image -->
+        <p> image 1</p>
+      </div>
+    </div>
+  </div>
+  <div class="col m4">
+    <div class="card">
+      <div class="card-image">
+        <img src="#">  <!-- card image -->
+        <p> image 2</p>
+      </div>
+    </div>
+  </div>
+  <div class="col m4">
+    <div class="card">
+      <div class="card-image">
+        <img src="#">  <!-- card image -->
+        <p> image 3</p>
+      </div>
+    </div>
+  </div>
+  </div>
+   
+  
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+ 
+</script>
+
+<script>  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.slider');
+    var instances = M.Slider.init(elems,{'height' : 400,'width': 650,  'indicators' : true});
+  });
+  </script>
+
+
+
+{% endblock %}

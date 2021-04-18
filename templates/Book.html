@@ -1,0 +1,65 @@
+{% extends "Layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Book.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+{% endblock %}
+{% block title %} Book {% endblock %}
+
+
+{{ super() }}
+
+{%  block content%}
+     
+
+
+        <div class = "search-container">
+
+           <form>
+                
+            <label for="start">Start date:</label>
+            <input type="date" id="start" name="trip-start" value="2021-03-27" min="2021-01-01" max="2025-12-31">
+            
+            <label for="end">End date:</label>
+            <input type="date" id="endt" name="trip-end" value="2021-03-27" min="2021-01-01" max="2025-12-31">
+
+                    
+                    <label for="filters">Sort by:</label>
+                    <select id="filters" name="filters" class="grey waves-effect waves-light btn">
+                        <option value="None">None</option>
+                        <option value="Price">Price</option>
+                    </select>
+                     
+                    <p>
+                        <label>
+                          <input type="checkbox" />
+                          <span>View</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                          <input type="checkbox" />
+                          <span>Double Beds</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                          <input type="checkbox" />
+                          <span>Room Service</span>
+                        </label>
+                    </p>
+                
+                    
+                  
+            </form>
+
+                <button class="waves-effect waves-light btn-large" type="submit" name="action">Search!</button>
+
+           
+
+        </div>
+
+        <div class = "results-container">
+
+        </div>
+
+ {%   endblock   %}

@@ -1,0 +1,148 @@
+{% extends "layout.html" %}
+{% block title %}Log App{% endblock %}
+{% block page %}
+      <a href="#" class="brand-logo">Log App</a>
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="container">
+
+  <h1>Create</h1>
+
+  <form class="col" method="POST" action="/logs">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Placeholder" name="studentId" id="stdid" type="text" class="validate">
+          <label for="first_name">Id Number</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <select name="stream" class="input-field col s12">
+          <option value="1">Stream 1</option>
+          <option value="2">Stream 2</option>
+          <option value="3">Stream 3</option>
+        </select>
+        <label>Materialize Select</label>
+      </div>
+
+      <div class="row">
+        
+          <button class="btn waves-effect waves-light col s4"" type="submit">Submit
+            <i class="material-icons right">send</i>
+          </button>
+
+      </div>
+
+    </form>
+
+    <h1>Update</h1>
+
+    <form class="col" method="POST" action="/updateLog">
+  
+        <div class="row input-field">
+          <select name="id" class="input-field col s12">
+            {% for log in logs %}
+              <option>{{log.id}}</option>
+            {% endfor %}   
+          </select>
+          <label>Row ID</label>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="Placeholder" name="studentId" id="stdid" type="text" class="validate">
+            <label for="first_name">Id Number</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <select name="stream" class="input-field col s12">
+            <option value="1">Stream 1</option>
+            <option value="2">Stream 2</option>
+            <option value="3">Stream 3</option>
+          </select>
+          <label>Materialize Select</label>
+        </div>
+
+        <div class="row">
+            <button class="btn waves-effect waves-light col s4"" type="submit">Update
+              <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+
+    <table>
+     <thead>
+       <th>ID </th>
+       <th>ID Number</th>
+       <th>Date</th>
+       <th>Stream</th>
+       <th>Actions</th>
+     </thead>
+     <tbody>
+       {% for log in logs %}
+            <tr>
+              <td>{{log.id}}</td>
+              <td>{{log.studentId}}</td>
+              <td>{{log.created.strftime("%m/%d/%Y, %H:%M:%S")}}</td>
+              <td>{{log.stream}}<td>
+              <td>
+                <a class="waves-effect waves-light btn" href="/updateForm/{{log.id}}">EDIT</a>
+                 <a class="waves-effect waves-light btn" href="/deleteLog/{{log.id}}">DELTE</a>
+              
+              </td>
+            </tr>
+        {% endfor %}   
+    <tbody>
+    </table>
+
+   <div id="container" style="width:100%; height:400px;"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+
+    function displayData(data){
+      const chart = Highcharts.chart('container', {
+          chart: {
+              type: 'bar'
+          },
+          title: {
+              text: 'Attendance'
+          },
+          xAxis: {
+              categories: ['Stream 1', 'Stream 2', 'Stream 3']
+          },
+          yAxis: {
+              title: {
+                  text: 'Total Attendance'
+              }
+          },
+          series: data
+      });
+    }
+
+    async function getData(){
+      
+      const response = await fetch('/getStats');
+      const data = await response.json();
+
+      displayData(data);
+    }
+
+    getData();
+
+  });
+</script>
+
+{% endblock %}

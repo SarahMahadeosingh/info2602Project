@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %}Login{% endblock %}
+{% block page %}
+      <a href="#" class="brand-logo"></a>
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+<style>
+
+</style>
+
+<div class="container">
+
+  <form class="col" method="POST" action="/login">
+
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Enter login id" name="loginID" id="loginID" type="text" class="validate">
+          <label for="login_Id">Id</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Enter email" name="email" id="email" type="email" class="validate">
+          <label for="email">Email</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Enter password" name="password" id="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
+      </div>
+
+      <div class="row">
+          <button class="btn waves-effect waves-light col s4"" type="submit">Submit
+            <i class="material-icons right">send</i>
+          </button>
+      </div>
+
+    </form>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+
+
+</script>
+
+{% endblock %}

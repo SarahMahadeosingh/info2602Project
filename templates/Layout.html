@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <!-- Compiled and minified CSS -->
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        
+
+        {% block head %}
+        {% endblock %}
+
+        <title>{% block title %}{% endblock %}</title>
+
+
+        <style>
+          .header {
+          padding: 60px;
+          text-align: center;
+  
+
+          //background-image: url('nature-4176575_1280.png');
+        
+
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: contain;
+          //background-size: 100% 100%;
+          color: white;
+          font-size: 30px;
+
+          background-image: url({{url_for('static', filename='nature-4176575_1280.png')}});
+
+        }
+
+        {% block style %}{% endblock %}
+
+        </style>
+
+    </head>
+    <body>
+        <div class="header">
+        </div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          <nav class="white black-text" style="padding: 10px">
+            <div class="nav-wrapper">
+                <ul class="flashes">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+          </nav>
+          {% endif %}
+        {% endwith %}
+
+        <div id="container">{% block content %}{% endblock %}</div>
+
+
+        <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    </body>
+</html>

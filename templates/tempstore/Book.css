@@ -1,0 +1,31 @@
+body {
+    background-image: url('img/photo-1517840901100-8179e982acb7.jfif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+.search-container{
+
+    background-color:white;
+    opacity: 0.9;
+
+    position: fixed;
+    bottom: 100px;
+    right: 400px;
+    width: 800px;
+    height: 400px;
+    border: 3px solid black;
+    
+
+  }
+
+label {
+    display: block;
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+input,
+label {
+    margin: .4rem 0;
+}

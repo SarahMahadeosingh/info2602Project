@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Frontend App</title>
+     <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+    <nav class="green">
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo center">Frontend App</a>
+      </div>
+    </nav>
+
+    <div id="content">
+        <style>
+
+</style>
+
+<div class="container">
+
+  <h1>Create</h1>
+
+  <form class="col" method="POST" action="/logs">
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Placeholder" name="studentId" id="stdid" type="text" class="validate">
+          <label for="first_name">Id Number</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <select name="stream" class="input-field col s12">
+          <option value="1">Stream 1</option>
+          <option value="2">Stream 2</option>
+          <option value="3">Stream 3</option>
+        </select>
+        <label>Materialize Select</label>
+      </div>
+
+      <div class="row">
+        
+          <button class="btn waves-effect waves-light col s4"" type="submit">Submit
+            <i class="material-icons right">send</i>
+          </button>
+
+      </div>
+
+    
+
+    <table>
+     <thead>
+       <th>ID </th>
+       <th>ID Number</th>
+       <th>Date</th>
+       <th>Stream</th>
+       <th>Actions</th>
+     </thead>
+     <tbody id="logsTable">
+       
+
+
+    <tbody>
+    </table>
+
+   <div id="container" style="width:100%; height:400px;"></div>
+</div>
+
+
+
+    </div>
+    <script src="server.js"></script>
+
+    <script>
+      //Use the server global variable for ALL http request to your flask App
+      //Set the variable in server.js
+      console.log(server);
+
+      //enter ALL javascript for you app here
+    
+   
+
+    function displayLogs(logs){
+      let html= '';
+      for (let log of logs){
+        html = `<tr>
+            <td> ${log.id}</td>
+            <td> ${log.studentId}</td>
+            <td> ${log.created}</td>
+            <td> ${log.stream}</td>
+            <td>
+              <a class"waves-effect waves-light btn" onclick= deleteLog(${log.id}) > 
+            </td>
+        <\tr>
+        ` ;
+        document.querySelector('#logsTable').innerHTML = html;
+      }
+
+    }
+
+    </script>
+  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+
+
+    async function getLogs(){
+
+      const response= await fetch ('/api/logs');
+      const data= await response.json;
+
+      displayData(data);
+    }
+
+
+    function displayData(data){
+      const chart = Highcharts.chart('container', {
+          chart: {
+              type: 'bar'
+          },
+          title: {
+              text: 'Attendance'
+          },
+          xAxis: {
+              categories: ['Stream 1', 'Stream 2', 'Stream 3']
+          },
+          yAxis: {
+              title: {
+                  text: 'Total Attendance'
+              }
+          },
+          series: data
+      });
+    }
+
+    async function getData(){
+      
+      const response = await fetch('/getStats');
+      const data = await response.json();
+
+      displayData(data);
+    }
+
+    getData();
+    getLogs();
+  });
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

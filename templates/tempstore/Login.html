@@ -1,0 +1,65 @@
+{% extends "Layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='Login_Signup.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='header.css') }}">
+{% endblock %}
+{% block title %} Login {% endblock %}
+
+
+{{ super() }}
+
+{%  block content%}
+
+  <nav class="black" >
+          <!-- To enter Our WebSite Name   !-->
+          
+          
+            <div id="nav-bar" class="nav-content">
+                <ul class="tabs tabs-transparent">
+                  <li class="tab"><a  href="/" >Home</a></li>
+                  <li class="tab" ><a href="/rooms" >Room</a></li>
+                  <li class="tab"><a  href="/about" >About</a></li>
+                  <li class="tab"><a class="active" href="/loginForm" >Login</a></li>
+                </ul>
+              </div>
+
+        </nav>
+
+  <div id="Login-Signup-Container">
+
+        <div id="Login-Signup-Form">
+            <form class="col s12" method="POST" action="/login"></form>
+
+              <!--
+              <div class="row">
+              <div class="input-field col s12">
+                <input placeholder="Enter login id" name="loginID" id="loginID" type="text" class="validate">
+                <label for="login_Id">Id</label>
+              </div>
+            </div>
+            -->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input placeholder="Enter email" name="email" id="email" type="email" class="validate">
+                <label for="email">Email</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input placeholder="Enter password" name="password" id="password" type="password" class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+             
+              <button class="waves-effect waves-light btn-large" type="submit" name="action">login!</button>
+                   
+            </form>
+            <p> Don't have an account? <a href="/signupForm">Signup!</a> </p>
+        </div>
+
+    </div>
+
+              
+{% endblock %}
