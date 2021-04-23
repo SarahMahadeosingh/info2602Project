@@ -1,0 +1,120 @@
+{% extends "Layout.html" %}
+{% block head %}
+
+
+      <!--Import materialize.css-->
+      <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+     
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+
+{% endblock %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block style %} 
+  body{
+  background-color: grey;
+}
+
+#bookings-button{
+      background: linear-gradient(to right, #00B2ff, #1000FF);
+      
+  }
+
+ table, th, td{
+   color: white;
+ }
+ tr.odd{
+  background: linear-gradient(to right, #9d9da4, #1000FF);
+ }
+
+ .content{
+
+   background-color:white;
+   opacity: 0.9;
+}
+
+
+
+
+  
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+
+
+
+<div class = "container ">
+    
+<a id="account-button" href="/MyAccount" class="grey waves-effect waves-light btn-large"></i>My Account</a>
+
+<a id="bookings-button" href="/MyBookings" class="waves-effect waves-light btn-large"></i>My Bookings</a>
+</div>
+
+<div class = "content-box">
+
+{% if bookingdetails == None %}
+
+<div class = "content">
+  <p> No Rooms Booked </p>
+</div>
+
+{% else %}
+<!--
+<p> Edit button has not been enabled yet...Can you create a submit form? </p> -->
+
+   
+      
+<br/>
+<br/>      
+   
+     
+<table class="center">
+  <thead>
+    <tr> 
+      <th> Room Type </th>
+      <th> Room Number </th>
+      <th> Check in </th>
+      <th> Check out </th>
+      <th> Actions </th>
+    </tr>
+  </thead>
+  <tbody>
+{% for booking in bookingdetails %}
+  <tr class="{{ loop.cycle('odd', 'even') }} center"> 
+    <td> {{booking.roomType}} </td>  
+    <td> {{booking.roomNumber}} </td>
+    <td> {{booking.check_in_Date}}  </td>
+    <td> {{booking.check_out_Date}}  </td>
+    <td> 
+
+
+         <a class="blue waves-effect waves-light btn-small" href="/MyBookings/updateForm/{{booking.roomType}}/{{booking.roomNumber}}" > Update</a>
+
+        <a class="blue waves-effect waves-light btn-small" href="/delete/{{booking.roomType}}/{{booking.roomNumber}}" > Delete</a>
+
+         <a class="blue waves-effect waves-light btn-small" href="/MyBill/{{booking.roomNumber}}" > View Bill</a
+        
+    </td>
+  </tr> 
+{% endfor %}
+</tbody>
+</table> 
+{% endif %}
+
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}

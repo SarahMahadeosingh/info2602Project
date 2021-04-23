@@ -1,0 +1,26 @@
+{% extends "Layout.html" %}
+{% block head %}
+
+{% endblock %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block style %} 
+ body{
+  background-color: rgb(39, 38, 38);
+}
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+<div class = "container">
+
+  <a id="account-button" href="/MyAccount" class="grey waves-effect waves-light btn-large"></i>My Account</a>
+
+<a id="bookings-button" href="/MyBookings" class="grey waves-effect waves-light btn-large"></i>My Bookings</a>
+</div>
+    
+
+{% endblock %}

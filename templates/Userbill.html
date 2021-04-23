@@ -1,0 +1,105 @@
+{% extends "Layout.html" %}
+{% block head %}
+
+{% endblock %}
+
+{% block title %}My Bill{% endblock %}
+
+{% block style %} 
+   body{
+  background-color: grey;
+}
+
+ table, th, td{
+   color: white;
+ }
+
+ tr.odd{
+  background: linear-gradient(to right, #9d9da4, #1000FF);
+ }
+.close{
+  background: white;
+}
+
+.modal-content, .modal-close{
+  font-size: 40px;
+}
+.modal-close{
+  margin: 20px;
+  
+}
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+<style>
+table{
+background-color: #595959;
+}
+</style>
+
+<div id="details" class = " content-text">
+
+  {% if bill == none %}
+    <p> No Bill </p>
+  {% else %}
+    <table class="center">
+  <thead>
+    <tr> 
+      <th> Room Type </th>
+      <th> Room Number </th>
+      <th> Room Rate
+      <th> Check In </th>
+      <th> Check Out </th>
+      <th> Number of Days </th>
+      <th> Price </th>
+      <th><h5><a href="/MyBookings" class="close right ">&times</a> </h5> </th>
+    </tr>
+  </thead>
+  <tbody>
+
+ 
+    <tr class="table-row">
+    <td> {{bill.roomType}} </td>  
+    <td> {{bill.roomNumber}} </td>
+    <td> ${{bill.roomRate}} </td>
+    <td> {{bill.check_in_Date}}  </td>
+    <td> {{bill.check_out_Date}}  </td>
+    <td> {{bill.numberDays}}  </td>
+    <td> ${{bill.price}}  </td>
+    
+  </tr> 
+
+</tbody>
+</table>
+
+  <br/>
+  <!-- Modal Button-->
+  <div class="modal-btn right">
+    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Make Payment </a> 
+  </div>  
+
+  <!-- Modal Purchase Form-->
+  <div id="modal1" class="modal bottom-sheet">
+      <div class= "modal-content center">
+        Would you like to make a payment?
+
+      </div>
+      <div class="modal-footer row">
+        <a href="#!" class="blue modal-action modal-close waves-effect waves-purple btn">YES</a>
+
+        <a href="#!" class="blue modal-action modal-close waves-effect waves-purple btn">NO</a>
+      </div>
+  </div>
+  {% endif %}
+  
+</div>
+   
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+  });
+</script>
+{% endblock %}

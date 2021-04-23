@@ -4,16 +4,21 @@
 
 {% endblock %}
 
-{% block title %} Room {% endblock %}
+{% block title %}Room{% endblock %}
 
 {% block style %}
 body {
-    //background-image: url('img/photo-1517840901100-8179e982acb7.jfif');
+    
      background-image: url({{url_for('static',filename='photo-1517840901100-8179e982acb7.png')}});
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
   }
+
+ .card{
+   background: linear-gradient(to right, #020024, #053689);
+   color: white;
+ } 
 
 {% endblock %}
 
@@ -79,7 +84,7 @@ body {
 
     }
 
-
+  
 
 .room-child {
     width: 100%;
@@ -89,20 +94,7 @@ body {
 } */ 
    
   </style>
-
-
-     <nav class="black">
-            <div class="nav-content">
-                <ul class="tabs tabs-transparent">
-                  <li class="tab"><a  href="/" >Home</a></li>
-                  <li class="tab" ><a class="active" href="/rooms" >Room</a></li>
-                  <li class="tab"><a  href="/about" >About</a></li>
-                  <li class="tab"><a  href="/loginForm" >Login</a></li>
-                </ul>
-              </div>
-        </nav>
-
-      
+    
        
        <div class = "room-container">
 

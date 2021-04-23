@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='Home.css') }}">
 {% endblock %}
 
-{% block title %} Home {% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block style %}
 
@@ -13,26 +13,6 @@
 
 {%  block content%}
 
-     <nav class="black">
-            <div class="nav-content">
-                <ul class="tabs tabs-transparent">
-                  <li class="tab"><a class="active" href="/" >Home</a></li>
-                  <li class="tab" ><a href="/rooms" >Room</a></li>
-                  <li class="tab"><a  href="/about" >About</a></li>
-                  
-
-                  {% if current_user.is_authenticated %}
-                  <li class="tab"><a  href="/logout" >Log Out</a></li>
-
-                   <li class="tab"> Hi {{ user['customer']['firstName'] }}! </li>
-
-                   {%  else %}
-                   <li class="tab"><a  href="/loginForm" >Login</a></li>
-                  {% endif %}
-
-                </ul>
-              </div>
-        </nav>
         
         <!-- Slideshow container -->
         <div class="slideshow-container">

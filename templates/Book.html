@@ -5,24 +5,45 @@
 {% endblock %}
 {% block title %} Book {% endblock %}
 
-
+{% block style %}
+  body{
+    background-color: rgb(39, 38, 38);
+  }
+{% endblock %}
 {{ super() }}
 
 {%  block content%}
      
+        <style>
 
+        .search-container{
+            background-color:white;
+            opacity: 0.9;
+            //height: 50%;
+            //width: 50px:
+            height: 50%;
+            width: 50%;
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+  
+            transform: translate(-50%, -50%);
+
+        }
+        </style>
 
         <div class = "search-container">
 
-           <form>
+           <form method="POST" action="/book/{{roomType}}/{{roomNumber}}">
                 
             <label for="start">Start date:</label>
-            <input type="date" id="start" name="trip-start" value="2021-03-27" min="2021-01-01" max="2025-12-31">
+            <input type="date" id="trip-start" name="trip-start" value="2021-03-27" min="2021-01-01" max="2025-12-31">
             
             <label for="end">End date:</label>
-            <input type="date" id="endt" name="trip-end" value="2021-03-27" min="2021-01-01" max="2025-12-31">
+            <input type="date" id="trip-end" name="trip-end" value="2021-03-27" min="2021-01-01" max="2025-12-31">
 
-                    
+                <!--
                     <label for="filters">Sort by:</label>
                     <select id="filters" name="filters" class="grey waves-effect waves-light btn">
                         <option value="None">None</option>
@@ -48,11 +69,14 @@
                         </label>
                     </p>
                 
-                    
-                  
+                  -->
+                  <!--
+                  <button class="waves-effect waves-light btn-large" type="submit" name="action">Book!</button>
+                  -->
+                    <button href="/MyBookings" class="waves-effect waves-light btn-large" type="submit" >Book!</button>
             </form>
 
-                <button class="waves-effect waves-light btn-large" type="submit" name="action">Search!</button>
+                
 
            
 

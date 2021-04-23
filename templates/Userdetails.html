@@ -1,37 +1,173 @@
 {% extends "Layout.html" %}
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+
+
 {% endblock %}
 
-{% block style %}
-  button{
+{% block title %}Account Details{% endblock %}
+
+{% block style %} 
+  body{
+  background-color: grey;
+}
+
+  button, #account-button, .close{
       background: linear-gradient(to right, #00B2ff, #1000FF);
+      
+  }
+  
+
+  #account-button{
+    display: block;
+    width: 17%;
+    margin: 70px;
     
+
+  }
+
+  #bookings-button{
+    display: block;
+    width: 17%;
+    margin: 70px;
+   
+     
+  }
+
+  #{
+    box-sizing: border-box
+  }
+
+   @media screen and (max-width: 768px) {
+     #bookings-button{
+       display: block;
+       width: 17%;
+       margin: 70px;
+   }
+        
+  }
+    
+  #details{
+    background: linear-gradient(to right, #020024, #053689);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    
+    max-width: 400px;
+    height: 400px;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    font-family: arial;
+    font-size: 13px;
+    
+    
+    
+    color: white;
+  }
+
+  img{
+    background-color: white;
+    
+  
+  }
+
+  .content-text{
+         background-color:white;
+            opacity: 0.9;
+            <!--height: 50%;-->
+            <!--width: 50px:-->
+            height: 50%;
+            width:50%;
+            box-sizing: border-box;
+            border: solid black 3px;
+         
+
+            position: fixed;
+            top: 60%;
+            left: 70%;
+
+            
+  
+            transform: translate(-50%, -50%);
+
+  }
+
+  #Login-Signup-Form{
+
+    border-radius: 3%;
+    background-color:white;
+    opacity: 0.9;
+
+    position: absolute;
+    top: 30%;
+    //left: 25%;
+    right: 10%;
+    width: 50%;
+    
+    border: 3px solid black;
+    
+    justify-content: center;
+    align-items: center;
     }
 
-  body{
  
- background-image: url( {{ url_for('static', filename='photo-1496417263034-38ec4f0b665a.png') }} )
-  }
-   
 
 {% endblock %}
-
-{% block title %} Signup {% endblock %}
 
 {{ super() }}
 
 {% block content %}
-  
 
 
-   
-  
- <div id="Login-Signup-Form" class="signupForm">
+<div class = "container">
 
-            <div class="row">
+<a id="account-button" href="/MyAccount" class="waves-effect waves-dark btn-large"></i>My Account</a>
 
-                <form class="col s12" method="POST" action="/signup">
+<a id="bookings-button" href="/MyBookings" class="grey waves-effect waves-light btn-large"></i>My Bookings</a>
+
+<div class = "content-buttons">
+
+
+</div>
+
+
+
+
+<div id="details" class = " content-text">
+
+  {% if accountdetails == none %}
+
+  {% else %}
+
+    <img src="{{url_for('static', filename='accountpic.png')}}" style="width:30%"/>
+
+    <p> First Name: {{accountdetails.firstName}}     Last Name: {{accountdetails.lastName}} </p>
+
+    <p> Phone Number: {{accountdetails.phoneNumber}} </p>
+
+    <p> Email Address: {{accountdetails.email}} </p>
+
+    <p> Country: {{accountdetails.country}} </p>
+
+    <p> Address: {{accountdetails.address}} </p>
+
+    <p><a class="blue waves-effect waves-light btn-small" href="#" onclick="toggleModal()" > Edit</a> </p>
+
+    <p><a class="blue waves-effect waves-light btn-small" href="" onclick="" > Delete Account</a> </p>
+  {% endif %}
+</div>
+
+</div>
+
+
+<div id="Login-Signup-Form" class="hide signupForm">
+
+          
+
+                <form class="col s12" method="POST" action="/MyProfile/edit">
+                <div "close-btn">
+                  <a href="#" onclick="toggleModal()" class="close right btn-small">&times</a>
+                </div>
+                <br/>
+                <br/>
                   <div class="row">
                     <div class="input-field col s6">
                       <input id="firstName" name="firstName" type="text" class="validate">
@@ -45,12 +181,6 @@
                   </div>
 
 
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input id="email" name="email" type="email" class="validate">
-                      <label for="email">Email</label>
-                    </div>
-                  </div>
 
                   <div class="row">
                     <div class="input-field col s6">
@@ -333,16 +463,22 @@
                  </select>
                  </div>
                   <br/>
-                  <button  type="submit" class=" waves-effect waves-light btn-large" >SignUp!
+                  <button  type="submit" class=" waves-effect waves-light btn-large" >Update!
                     
                   </button>
               
                 </form>
-              </div>
-
-              <p> Already have an account? <a href="/loginForm">login!</a> </p> 
+              
         </div>
 
+    <div>
 
-
+<script>
+    const toggleModal=() => {        
+         
+              document.getElementById("details").classList.toggle('hide');
+              document.getElementById("Login-Signup-Form").classList.toggle('hide');
+              
+              }; 
+</script>
 {% endblock %}

@@ -1,0 +1,93 @@
+{% extends "Layout.html" %}
+{% block head %}
+
+
+
+{% endblock %}
+
+{% block title %}My Bookings{% endblock %}
+
+{% block style %} 
+  body{
+  background-color: rgb(39, 38, 38);
+}
+
+#updateForm{
+    
+
+    border-radius: 3%;
+    background-color: white;
+    opacity: 0.9;
+
+    position: absolute;
+    top: 40%;
+    left: 25%;
+    
+    width: 50%;
+    
+    border: 3px solid black;
+    
+    justify-content: center;
+    align-items: center;
+
+  
+    
+}
+
+.input-field> button, .close:hover{
+  background:linear-gradient(to right, #00B2ff, #1000FF);
+}
+
+.update-form-input>label{
+  color: purple;
+  font-size: 15px;
+}
+
+.update-form-title{
+  font-weight: 600px;
+  color: #493167;
+  
+  text-shadow: inset -10px -10px 0  #fff;
+}
+
+{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+
+<div class = "container ">
+    
+<a id="account-button" href="/MyAccount" class="grey waves-effect waves-light btn-large"></i>My Account</a>
+
+<a id="bookings-button" href="/MyBookings" class="waves-effect waves-light btn-large"></i>My Bookings</a>
+</div>
+<br/>
+<br/>
+   <div  id="updateForm" >
+		<form class="update-form" method="POST" action="">
+    <h4 class="update-form-title"> Updating Booking: {{booking.roomType}} Room # {{booking.roomNumber}}
+      
+     <a href="/MyBookings" class="close right">&times</a>
+    </h4>
+
+    
+        
+        <div class="update-form-input col s12 ">
+          <label for="start" >Start date:</label>
+            <input type="date" id="trip-start" name="trip-start" value="{{booking.check_in_Date}}" >
+        </div>
+
+        <div class="update-form-input col s12">
+          <label for="end">End date:</label>
+            <input type="date" id="trip-end" name="trip-end" value="{{booking.check_out_Date}}" >
+        </div>
+     
+		 <div class="input-field col s12">
+          <button type="submit" class="waves-effect waves-light btn">Update</button>
+        </div>         
+      </div>	
+      </form>
+     </div>
+
+{%   endblock   %}

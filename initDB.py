@@ -1,5 +1,5 @@
 from main import app
-from models import db , Room
+from models import db , Room , User , Customer
 from sqlalchemy.exc import IntegrityError
 
 import csv
@@ -31,3 +31,18 @@ with open("rooms.csv", "r") as csv_file:
 
   print("Database Initialized!")
 
+#Sirs Login
+
+try:
+    
+  user = User( email="bob@gmail.com")
+  user.set_password("bobpass")
+  customer= Customer(email= "bob@gmail.com", firstName="bob", lastName= "builder", phoneNumber= 1234567, country="Trinidad", address="Home")
+  db.session.add(user)
+  db.session.add(customer)
+  db.session.commit()
+
+except IntegrityError:
+    db.session.rollback()
+
+print("Bob Added!")

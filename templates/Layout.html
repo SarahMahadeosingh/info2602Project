@@ -22,9 +22,7 @@
           .header {
           padding: 60px;
           text-align: center;
-  
 
-          //background-image: url('nature-4176575_1280.png');
         
 
           background-repeat: no-repeat;
@@ -40,32 +38,120 @@
 
         {% block style %}{% endblock %}
 
+
+        #messages{
+        background: linear-gradient(to right, #3399BF, #1000FF);
+        color: black;
+        }
         </style>
 
     </head>
-    <body>
+    <body onload="select()">
         <div class="header">
         </div>
+
+        <nav class="black">
+            <div class="nav-content">
+                <ul class="tabs tabs-transparent">
+                  <li class="tab"><a id="tab1"  href="/" >Home</a></li>
+                  <li  class="tab" ><a id="tab2" href="/rooms" >Room</a></li>
+                  <li  class="tab"><a id="tab3" href="/about" >About</a></li>
+                  
+
+                  {% if current_user.is_authenticated %}
+                  <li class="tab"><a id="tab4" onclick="toggleModal(event)" href="/logout" >Log Out</a></li>
+                  
+                  <li class="tab"><a id="tab6"  href="/MyProfile" >My Profile</a></li>
+                  
+                  <!--
+                  <li class="tab"><a id="tab6"  href="/MyBookings" >My Bookings</a></li>
+
+                  <li class="tab"><a id="tab7"  href="/MyAccount" >My Account</a></li>
+                  -->
+
+                   <li  class="tab"> Hi {{ user['customer']['firstName'] }}! </li>
+
+                   {%  else %}
+                   <li class="tab"><a id="tab5"  href="/loginForm" >Login</a></li>
+                  {% endif %}
+
+                </ul>
+              </div>
+        </nav>
+
         {% with messages = get_flashed_messages() %}
           {% if messages %}
-          <nav class="white black-text" style="padding: 10px">
+          <nav id="messages" class="white black-text" style="padding: 10px">
             <div class="nav-wrapper">
                 <ul class="flashes">
                 {% for message in messages %}
-                  <li>{{ message }}</li>
+                  <li><h5>{{ message }}</h5></li>
                 {% endfor %}
                 </ul>
             </div>
           </nav>
+          
           {% endif %}
         {% endwith %}
 
         <div id="container">{% block content %}{% endblock %}</div>
 
 
-        <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
+        <script 
+        
+        src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
         <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+        
+        </script>
+        <script>
 
+            const toggleModal=(id) => {        
+                    
+              console.log(id);
+              document.getElementById(id).classList.toggle('active');
+              };  
+
+           
+        function select(){   
+          let title= document.title;
+          console.log(title)
+          if (title=="Home")
+            toggleModal('tab1');
+          else if (title=="Room")
+            toggleModal('tab2');
+          else if (title=="Single")
+            toggleModal('tab2');
+          else if (title=="Double")
+            toggleModal('tab2');
+          else if (title=="Queen")
+            toggleModal('tab2');
+          else if (title=="Luxury")
+            toggleModal('tab2');
+          else if (title=="About")
+            toggleModal('tab3');
+          else if (title=="Login")
+            toggleModal('tab5');
+          else if (title=="My Profile")
+            toggleModal('tab6');
+          else if (title=="Account Details")
+            toggleModal('tab6');
+          else if (title=="My Bookings")
+            toggleModal('tab6');
+          else if (title=="My Bill")
+            toggleModal('tab6');
+          
+          /*
+          else if (title=="My Bookings")
+            toggleModal('tab6');
+          else if (title=="My Account")
+            toggleModal('tab7');
+          */
+        }
+
+        //document.addEventListener("load", select);
+        
+
+        </script>
     </body>
 </html>

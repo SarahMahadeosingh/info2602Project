@@ -10,11 +10,11 @@ import random
 
 class User(UserMixin, db.Model):
   id= db.Column(db.Integer, unique= True, default= random.randint(1, 100000000) )
-  email= db.Column('email', db.String(120), primary_key=True)
+  email= db.Column('email', db.String(120), nullable=False, primary_key=True)
   password= db.Column('password', db.String(120), nullable= False)
   customer= db.relationship("Customer", backref="user", lazy= True, uselist= False)
   bookings= db.relationship("Booking", backref="user", lazy= True)
-  bill = db.relationship("Bill", backref="user", lazy= True)
+  bills = db.relationship("Bill", backref="user", lazy= True)
 
   def set_password(self, password):
     self.password= generate_password_hash(password, method="sha256")
@@ -27,7 +27,8 @@ class User(UserMixin, db.Model):
         'id': self.id,
         'customer': self.customer.toDict(),
         'email': self.email,
-        'bookings': [ booking.toDict() for booking in self.bookings]
+        'bookings': [ booking.toDict() for booking in self.bookings],
+        'bills': [bill.toDict() for bill in self.bills] 
     }
     
   
@@ -63,10 +64,10 @@ class Room(db.Model):
   available = db.Column('available', db.Boolean, nullable=False, default= True)
 
   def book(self):
-    self.available= True
+    self.available= False
 
   def unbook(self):
-    self.available= False
+    self.available= True
 
   def toDict(self):
     return{
@@ -89,9 +90,9 @@ class Booking(db.Model):
   def toDict(self):
       return{
         'roomNumber' : self.roomNumber,
-        'roomrType' : self.roomType,
-        'check_in_Date' : self.check_in_Date.strftime("%m/%d/%Y, %H:%M:%S"),
-        'check_out_Date' : self.check_out_Date.strftime("%m/%d/%Y, %H:%M:%S")
+        'roomType' : self.roomType,
+        'check_in_Date' : self.check_in_Date.strftime("%Y-%m-%d"),
+        'check_out_Date' : self.check_out_Date.strftime("%Y-%m-%d")
       }
 
 
@@ -101,11 +102,31 @@ class Bill(db.Model):
   roomRate= db.Column( db.Float, nullable= False)
   check_in_Date= db.Column(db.DateTime, default=datetime.datetime.utcnow)
   check_out_Date= db.Column(db.DateTime)
+
+  #Added a Number of days field
+  numberDays = db.Column (db.Integer , nullable=False)
   price= db.Column( db.Float, nullable= False)
   userEmail= db.Column('email', db.String(120), db.ForeignKey("user.email"))  
 
-  def calculateBill():
-    return 0
+  def calculateBill(self):
+    self.numberDays= (self.check_out_Date - self.check_in_Date).days
+    if self.numberDays== 0:
+      self.numberDays= 1
+
+    self.price = self.numberDays * self.roomRate
+    
+
+  #added the toDict
+  def toDict(self):
+    return{
+      'roomType' : self.roomType,
+      'roomNumber' : self.roomNumber,
+      'roomRate' : self.roomRate,
+      'check_in_Date' : self.check_in_Date.strftime("%Y-%m-%d"),
+      'check_out_Date' : self.check_out_Date.strftime("%Y-%m-%d"),
+      'price' : self.price,
+      'userEmail' : self.userEmail
+    }
 
 
 #For Billing i assume it would be per Days? ( Need uniformed decision )
