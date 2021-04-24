@@ -1,4 +1,5 @@
 
+import os
 import json
 from flask_cors import CORS
 from flask import Flask, request, jsonify, render_template, redirect, flash, url_for
@@ -32,12 +33,35 @@ login_manager.REMEMBER_COOKIE_REFRESH_EACH_REQUEST= True
 
 ''' Begin boilerplate code '''
 
+def get_db_uri(scheme='sqlite://', user='', password='', host='//demo.db', port='', name=''):
+    return scheme+'://'+user+':'+password+'@'+host+':'+port+'/'+name 
+
+def loadConfig(app):
+    #try to load config from file, if fails then try to load from environment
+    try:
+        app.config.from_object('App.config')
+        app.config['SQLALCHEMY_DATABASE_URI'] = get_db_uri() if app.config['SQLITEDB'] else app.config['DBURI']
+    except:
+        print("config file not present using environment variables")
+        # DBUSER = os.environ.get("DBUSER")
+        # DBPASSWORD = os.environ.get("DBPASSWORD")
+        # DBHOST = os.environ.get("DBHOST")
+        # DBPORT = os.environ.get("DBPORT")
+        # DBNAME = os.environ.get("DBNAME")
+        DBURI = os.environ.get("DBURI")
+        SQLITEDB = os.environ.get("SQLITEDB", default="true")
+        app.config['ENV'] = os.environ.get("ENV")
+        app.config['SQLALCHEMY_DATABASE_URI'] = get_db_uri() if SQLITEDB in {'True', 'true', 'TRUE'} else DBURI
+
+
 
 def create_app():
-  app = Flask(__name__, static_url_path='')
-  app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+  app = Flask(__name__, static_url_path='/static')
+  loadConfig(app)
+  
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-  app.config['SECRET_KEY'] = "MYSECRET"
+  app.config['TEMPLATES_AUTO_RELOAD'] = True
+  app.config['PREFERRED_URL_SCHEME'] = 'https'
   CORS(app)
   db.init_app(app)
   login_manager.init_app(app)

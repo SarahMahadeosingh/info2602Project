@@ -15,7 +15,7 @@ db.create_all(app=app)
 #  room = Room(type="King" , roomRate=250.00 , roomNumber=x);
 
 # add code to parse csv, create and save room objects
-with open("rooms.csv", "r") as csv_file:
+with open("App/rooms.csv", "r") as csv_file:
   data = csv.DictReader(csv_file)
 
   for row in data:
