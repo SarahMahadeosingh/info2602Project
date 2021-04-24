@@ -93,6 +93,10 @@ def loginForm():
 def sign_up():
   data= request.form  # get json data (aka submitted login_id, email & password)
   
+  if data == None:
+    flash("Invalid request.")
+    return redirect("/")
+
   if data['password'] !=data['confirm_password']:
     flash("Passwords must match!")
     return redirect(url_for('display_signup'))
@@ -230,12 +234,6 @@ def addBooking(roomType , roomNumber):
 
 
 
-        #TEST 
-@app.route('/users', methods=['GET'])
-def all_users():
-  users= User.query.all();
-  users= [user.toDict() for user in users]
-  return jsonify(users)
 
 #Route for a specific room type
 @app.route('/rooms/<roomType>')
@@ -248,10 +246,6 @@ def display_roomType(roomType):
   for room in rooms:
     roomCount = roomCount + 1
 
-  #if(len(rooms)!=0):
-  #rooms = rooms[0]
-  #rooms= [room.toDict() for room in rooms];
-  #return jsonify( rooms)
 
   rooms = Room.query.filter_by(roomType = roomType , available=True).first()
 
@@ -263,15 +257,7 @@ def display_roomType(roomType):
   return render_template('Roomtype.html' , roomType = roomType , rooms = rooms,roomCount = roomCount)
 
 
-#@app.route('/MyProfile')
-#@login_required
-#def display_profile():
 
-  #if current_user.is_authenticated:
-    #user= User.query.filter_by(email= current_user.email).first()
-    #user= user.toDict()
-
-  #return render_template('Profile.html' , user=user)
 
 @app.route('/MyBookings')
 @login_required
@@ -302,6 +288,7 @@ def display_AcountDetails():
 
   return render_template('Userdetails.html' , user=user , accountdetails=accountdetails)
 
+
 #Deletes booking & unbook Room: including, booking, bill
 @app.route("/delete/<roomType>/<roomNumber>", methods=['GET'])
 @login_required
@@ -320,7 +307,7 @@ def delete_booking(roomType, roomNumber):
     try:
       db.session.delete(booking)
       db.session.delete(bill)
-      #room is not deleted but updated, so we just add the unpdate
+      #room is not deleted but updated, so we just add the update
       db.session.add(room)
       db.session.commit()
       flash("Your booking has been successfully deleted.")
@@ -520,6 +507,12 @@ def pay_bill(roomNumber):
   return redirect(request.referrer)
 
 
+ #TEST 
+@app.route('/users', methods=['GET'])
+def all_users():
+  users= User.query.all();
+  users= [user.toDict() for user in users]
+  return jsonify(users)
 
 
 @app.route("/bills", methods=["GET"])
