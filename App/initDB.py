@@ -1,5 +1,5 @@
-from main import app
-from models import db , Room , User , Customer
+from App.main import app
+from App.models import db , Room , User , Customer
 from sqlalchemy.exc import IntegrityError
 
 import csv

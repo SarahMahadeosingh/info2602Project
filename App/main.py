@@ -5,8 +5,8 @@ from flask_cors import CORS
 from flask import Flask, request, jsonify, render_template, redirect, flash, url_for
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
-from models import db, User, Customer #add application models
-from models import Room , Booking , Bill
+from App.models import db, User, Customer #add application models
+from App.models import Room , Booking , Bill
 import datetime
 
 ''' Begin Flask Login Functions '''
