@@ -7,8 +7,9 @@
 {% block title %}Account Details{% endblock %}
 
 {% block style %} 
-  body{
-  background-color: grey;
+ body{
+
+  background-color: rgb(39, 38, 38);
 }
 
   button, #account-button, .close{
@@ -17,21 +18,15 @@
   }
   
 
-  #account-button{
+  #account-button, #bookings-button{
     display: block;
-    width: 17%;
+    width: 17vw;
     margin: 70px;
     
 
   }
 
-  #bookings-button{
-    display: block;
-    width: 17%;
-    margin: 70px;
-   
-     
-  }
+  
 
   #{
     box-sizing: border-box
@@ -40,14 +35,14 @@
    @media screen and (max-width: 768px) {
      #bookings-button{
        display: block;
-       width: 17%;
+       width: 17vw;
        margin: 70px;
    }
         
   }
     
   #details{
-    background: linear-gradient(to right, #020024, #053689);
+    //background: linear-gradient(to right, #020024, #053689);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     
     max-width: 400px;
@@ -60,7 +55,7 @@
     
     
     
-    color: white;
+    color: black;
   }
 
   img{
@@ -151,7 +146,13 @@
 
     <p><a class="blue waves-effect waves-light btn-small" href="#" onclick="toggleModal()" > Edit</a> </p>
 
-    <p><a class="blue waves-effect waves-light btn-small" href="" onclick="" > Delete Account</a> </p>
+    <p>
+      
+      <form action="/deleteUser" method="POST"> 
+
+      <button type="submit" class="blue waves-effect waves-light btn-small" >Delete Account </button>
+      </form>
+    </p>
   {% endif %}
 </div>
 

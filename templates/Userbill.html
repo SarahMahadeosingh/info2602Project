@@ -1,13 +1,15 @@
 {% extends "Layout.html" %}
 {% block head %}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 {% endblock %}
 
 {% block title %}My Bill{% endblock %}
 
 {% block style %} 
-   body{
-  background-color: grey;
+body{
+
+  background-color: rgb(39, 38, 38);
 }
 
  table, th, td{
@@ -18,11 +20,16 @@
   background: linear-gradient(to right, #9d9da4, #1000FF);
  }
 .close{
-  background: white;
+  background-color: white;
+}
+
+.close:hover, .modal-close:hover{
+  background: linear-gradient(to right, #9d9da4, #1000FF);
 }
 
 .modal-content, .modal-close{
   font-size: 40px;
+    
 }
 .modal-close{
   margin: 20px;
@@ -54,7 +61,8 @@ background-color: #595959;
       <th> Check Out </th>
       <th> Number of Days </th>
       <th> Price </th>
-      <th><h5><a href="/MyBookings" class="close right ">&times</a> </h5> </th>
+      <th> Paid </th>
+      <th ><h5><a href="/MyBookings" class="close right ">&times</a> </h5> </th>
     </tr>
   </thead>
   <tbody>
@@ -68,7 +76,11 @@ background-color: #595959;
     <td> {{bill.check_out_Date}}  </td>
     <td> {{bill.numberDays}}  </td>
     <td> ${{bill.price}}  </td>
-    
+    {%  if bill.paid == True  %}
+    <td><i class="material-icons">check</i></td>
+    {%   elif bill.paid == False %}
+    <td> <i class="material-icons">clear</i> </td>
+    {%   endif %}
   </tr> 
 
 </tbody>
@@ -77,7 +89,7 @@ background-color: #595959;
   <br/>
   <!-- Modal Button-->
   <div class="modal-btn right">
-    <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Make Payment </a> 
+    <a class="waves-effect waves-light btn modal-trigger" style="background: linear-gradient(to right, #9d9da4, #1000FF);"href="#modal1">Make Payment </a> 
   </div>  
 
   <!-- Modal Purchase Form-->
@@ -87,9 +99,13 @@ background-color: #595959;
 
       </div>
       <div class="modal-footer row">
-        <a href="#!" class="blue modal-action modal-close waves-effect waves-purple btn">YES</a>
+        
+        <form action="/MyBill/{{bill.roomNumber}}/pay" method="POST" class="left">
 
-        <a href="#!" class="blue modal-action modal-close waves-effect waves-purple btn">NO</a>
+          <button  type="submit" class="blue modal-action modal-close waves-effect waves-purple btn"> YES </button>
+        </form>
+
+        <a href="" class="blue modal-action modal-close waves-effect waves-purple btn">NO</a>
       </div>
   </div>
   {% endif %}

@@ -136,6 +136,7 @@ def login():
   flash("Login Failed: please Enter your credentials before submitting. ")
   return redirect( url_for('.loginForm') )
   
+  
 @app.route("/logout")
 @login_required
 def logout():
@@ -262,15 +263,15 @@ def display_roomType(roomType):
   return render_template('Roomtype.html' , roomType = roomType , rooms = rooms,roomCount = roomCount)
 
 
-@app.route('/MyProfile')
-@login_required
-def display_profile():
+#@app.route('/MyProfile')
+#@login_required
+#def display_profile():
 
-  if current_user.is_authenticated:
-    user= User.query.filter_by(email= current_user.email).first()
-    user= user.toDict()
+  #if current_user.is_authenticated:
+    #user= User.query.filter_by(email= current_user.email).first()
+    #user= user.toDict()
 
-  return render_template('Profile.html' , user=user)
+  #return render_template('Profile.html' , user=user)
 
 @app.route('/MyBookings')
 @login_required
@@ -389,6 +390,7 @@ def edit_account():
 
 
 @app.route('/MyBookings/updateForm/<roomType>/<roomNumber>', methods=['GET']) 
+@login_required
 def display_booking_updateForm(roomType, roomNumber):
   user= User.query.filter_by(email= current_user.email).first()
   user= user.toDict()
@@ -396,9 +398,11 @@ def display_booking_updateForm(roomType, roomNumber):
   booking= booking.toDict()
   return render_template('Updateuserbookings.html', user= user, booking= booking)
 
+
 #Updates a user booking and bill
 #Updates a user booking and bill
 @app.route('/MyBookings/updateForm/<roomType>/<roomNumber>', methods=['POST']) 
+@login_required
 def update_booking(roomType, roomNumber):
   data= request.form
   if roomType==None or roomNumber==None or data==None:
@@ -438,32 +442,84 @@ def update_booking(roomType, roomNumber):
 
 
 @app.route('/deleteUser', methods=['POST'])
+@login_required
 def delete_user():
   user= User.query.filter_by(email= current_user.email).first()
   customer= Customer.query.filter_by(email= current_user.email).first()
 
   bookings= Booking.query.all()
 
-  if bookings !=None:
-    return ""
+  
 
-  bills= Bill.query.all()
+  try:
+    if bookings != None:
+      for booking in bookings:
+        if booking.userEmail == current_user.email:
+        
+          room= Room.query.filter_by(roomNumber= booking.roomNumber).first()
+          room.unbook()
+          
+          bill= Bill.query.filter_by(roomNumber=booking.roomNumber, userEmail= current_user.email, check_in_Date= booking.check_in_Date).first()
 
-  return json.dumps("incomplete route")
+          
+          db.session.add(room)
+          db.session.delete(booking)
+          db.session.delete(bill)
+
+    db.session.delete(customer)
+    db.session.delete(user)
+    db.session.commit()
+    flash("Your account has been successfully deleted.")
+  except:
+    db.session.rollback()
+    flash("You failed to delete your account")
+    return redirect (request.referrer)
+  
+  return redirect("/")
 
 
-@app.route('/MyBill/<roomNumber>')
+
+
+@app.route('/MyBill/<roomNumber>', methods=['GET'])
+@login_required
 def display_bill(roomNumber):
   
   if current_user.is_authenticated:
     user= User.query.filter_by(email= current_user.email).first()
     user= user.toDict()
 
-  bill = Bill.query.filter_by(roomNumber= int(roomNumber)).first() 
+    bill = Bill.query.filter_by(roomNumber= int(roomNumber)).first() 
 
-  return render_template('Userbill.html' , user = user , bill = bill)
+    return render_template('Userbill.html' , user = user , bill = bill)
 
   return redirect("/MyBookings")
+
+@app.route('/MyBill/<roomNumber>/pay', methods=['POST'])
+@login_required
+def pay_bill(roomNumber):
+  bill = Bill.query.filter_by(roomNumber= int(roomNumber)).first() 
+
+  if bill== None:
+    flash("An Invalid request was made.")
+    return redirect('/MyBookings')
+
+  if bill.paid is True:
+    flash("Your bill has already been paid.")
+    return redirect(request.referrer)
+
+  bill.pay()
+  try:
+    db.session.add(bill)
+    db.session.commit()
+    flash("You have successful paid your bill.")
+
+  except: 
+    db.session.rollback()
+    flash("Attempt to pay bill failed.")
+
+  return redirect(request.referrer)
+
+
 
 
 @app.route("/bills", methods=["GET"])

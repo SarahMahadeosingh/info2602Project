@@ -1,6 +1,7 @@
 {% extends "Layout.html" %}
 {% block head %}
-
+  <!-- Import materialize icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
       <!--Import materialize.css-->
       <!-- Compiled and minified CSS -->
@@ -16,8 +17,9 @@
 {% block title %}My Bookings{% endblock %}
 
 {% block style %} 
-  body{
-  background-color: grey;
+ body{
+
+  background-color: rgb(39, 38, 38);
 }
 
 #bookings-button{
@@ -39,7 +41,30 @@
 }
 
 
+.content-box{
+  width: 800px;
+ 
+  padding: 40px;
+  margin:20px;
+  
+  
+  position: absolute;
+  top: 20%;
+  left: 35%;
+  
+}
 
+
+
+  #account-button, #bookings-button{
+    display: block;
+    width: 20%;
+    margin: 50px;
+    
+
+  }
+
+  
 
   
 {% endblock %}
@@ -93,15 +118,19 @@
     <td> {{booking.roomNumber}} </td>
     <td> {{booking.check_in_Date}}  </td>
     <td> {{booking.check_out_Date}}  </td>
-    <td> 
+    <td > 
+      <div class="column">
 
+         <a class="blue waves-effect waves-light btn-small" href="/MyBookings/updateForm/{{booking.roomType}}/{{booking.roomNumber}}" >
+          <i class="material-icons">edit</i>
+         </a>
 
-         <a class="blue waves-effect waves-light btn-small" href="/MyBookings/updateForm/{{booking.roomType}}/{{booking.roomNumber}}" > Update</a>
-
-        <a class="blue waves-effect waves-light btn-small" href="/delete/{{booking.roomType}}/{{booking.roomNumber}}" > Delete</a>
+        <a class="blue waves-effect waves-light btn-small" href="/delete/{{booking.roomType}}/{{booking.roomNumber}}" > 
+          <i class="material-icons">delete</i>
+        </a>
 
          <a class="blue waves-effect waves-light btn-small" href="/MyBill/{{booking.roomNumber}}" > View Bill</a
-        
+      </div>
     </td>
   </tr> 
 {% endfor %}

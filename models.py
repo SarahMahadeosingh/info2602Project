@@ -102,7 +102,7 @@ class Bill(db.Model):
   roomRate= db.Column( db.Float, nullable= False)
   check_in_Date= db.Column(db.DateTime, default=datetime.datetime.utcnow)
   check_out_Date= db.Column(db.DateTime)
-
+  paid= db.Column('paid', db.Boolean, nullable=False, default= False)
   #Added a Number of days field
   numberDays = db.Column (db.Integer , nullable=False)
   price= db.Column( db.Float, nullable= False)
@@ -115,6 +115,8 @@ class Bill(db.Model):
 
     self.price = self.numberDays * self.roomRate
     
+  def pay(self):
+    self.paid= True
 
   #added the toDict
   def toDict(self):
@@ -125,7 +127,9 @@ class Bill(db.Model):
       'check_in_Date' : self.check_in_Date.strftime("%Y-%m-%d"),
       'check_out_Date' : self.check_out_Date.strftime("%Y-%m-%d"),
       'price' : self.price,
-      'userEmail' : self.userEmail
+      'userEmail' : self.userEmail,
+      'paid': self.paid
+
     }
 
 
