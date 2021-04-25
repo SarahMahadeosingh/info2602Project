@@ -1,1 +1,1 @@
-web: gunicorn info2602Project: app
+web: gunicorn paradise-hotels: app
