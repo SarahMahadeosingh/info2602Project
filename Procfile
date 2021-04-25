@@ -1,1 +1,1 @@
-web: gunicorn paradise-hotels: app
+web: gunicorn app: main
