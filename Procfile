@@ -1,2 +1,1 @@
-web: gunicorn App: app
-server = app.server
+web: gunicorn App: app.server
